@@ -16,7 +16,7 @@ import { useIsMobile } from "../components/hooks/UseIsMobile";
 import { useNavigate } from "react-router-dom";
 import { Dialog, DialogTitle, DialogHeader, DialogContent } from "../components/ui/dialog";
 
-interface formattedComplaint {
+export interface formattedComplaint {
     id: string;
     complaintType: string;
     description: string;

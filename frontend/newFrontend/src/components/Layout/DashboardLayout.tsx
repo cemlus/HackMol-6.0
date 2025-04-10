@@ -1,7 +1,7 @@
 
 import type React from "react"
 import { useState } from "react"
-import { Outlet, NavLink, useNavigate, useLocation } from "react-router-dom"
+import { Outlet, NavLink, useNavigate } from "react-router-dom"
 import { Shield, FileText, MapPin, Settings, User, LogOut, Menu, X, Plus, ChevronFirstIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -18,7 +18,6 @@ import { useIsMobile } from "../hooks/UseIsMobile"
 const DashboardLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const navigate = useNavigate()
-  const location = useLocation()
   const isMobile = useIsMobile()
 
   const toggleSidebar = () => {

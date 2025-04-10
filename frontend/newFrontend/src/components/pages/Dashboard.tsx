@@ -22,6 +22,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
+import { formattedComplaint } from "@/DashboardComponents/MyComplaints";
 
 const Dashboard: React.FC = () => {
   const [complaints, setComplaints] = useState([]);
@@ -62,7 +63,7 @@ const Dashboard: React.FC = () => {
 
     const complaintsUpto5 = complaints.slice(0, 5);
 
-    const getStatusText = (status) => {
+    const getStatusText = (status: any) => {
       switch (status) {
         case "0":
           return "Pending";
@@ -70,6 +71,8 @@ const Dashboard: React.FC = () => {
           return "Accepted";
         case "2":
           return "Rejected";
+        case "3":
+          return "Escalated";
         default:
           return "Unknown";
       }
@@ -165,7 +168,7 @@ const Dashboard: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {complaintsUpto5.map((activity) => (
+              {complaintsUpto5.map((activity: formattedComplaint) => (
                 <div
                   key={activity.id}
                   className="flex items-start gap-4 pb-4 border-b border-gray-100 last:border-0 last:pb-0"
@@ -203,7 +206,7 @@ const Dashboard: React.FC = () => {
                         {activity.id} {getStatusText(activity.status)}
                       </p>
                       <span className="text-xs text-gray-500">
-                        {new Date(activity.lastUpdatedTimestamp).toLocaleString()}
+                        {activity.lastUpdatedTimestamp ? new Date(activity.lastUpdatedTimestamp).toLocaleString() : "Not Available"}
                       </span>
                     </div>
                     <Button
