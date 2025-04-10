@@ -1,9 +1,7 @@
 import { Shield, Lock, Zap } from "lucide-react"
 import { Button } from "../ui/button"
-import { useNavigate } from "react-router-dom"
 
 export function Hero() {
-  const navigate = useNavigate();
     return (
         <section className="py-20 md:py-24 bg-gradient-to-b from-white to-gray-50 w-full">
           <div className="container mx-auto px-4 md:px-6">
@@ -19,7 +17,7 @@ export function Hero() {
               </p>
             </div>
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
-              <Button className="bg-[#FF4D4D] hover:bg-[#e63e3e] text-white cursor-pointer" onClick={() => navigate('/fileComplaint')} >Get Started in 30 Seconds</Button>
+              <Button className="bg-[#FF4D4D] hover:bg-[#e63e3e] text-white cursor-pointer" >Get Started in 30 Seconds</Button>
             </div>
               </div>
               <div className="flex justify-center">

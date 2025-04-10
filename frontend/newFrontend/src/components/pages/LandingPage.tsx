@@ -4,6 +4,7 @@ import { Features } from "../Landing/Features";
 import { Footer } from "../Landing/Footer";
 import { Header } from "../Landing/Header";
 import { Hero } from "../Landing/Hero";
+import { HowItWorks } from "../Landing/HowItWorks";
 import { Stats } from "../Landing/Stats";
 import "../../App.css"
 import "../../global.css"
@@ -17,6 +18,7 @@ export function LandingPage() {
         <Hero />
         <Stats />
         <Features />
+        <HowItWorks />
         <AboutUs />
         <FAQ />
       </main>
