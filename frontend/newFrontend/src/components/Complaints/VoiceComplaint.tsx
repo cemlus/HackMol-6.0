@@ -36,7 +36,7 @@ export function VoiceComplaint() {
       }
     };
 
-    // checkAuthentication();
+    checkAuthentication();
   }, [navigate]);
 
   const stopListening = () => {

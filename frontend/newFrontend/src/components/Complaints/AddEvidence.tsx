@@ -5,7 +5,7 @@ import axios from "axios";
 
 export function AddEvidence() {
   const [complaintId, setComplaintId] = useState(""); // Renamed from caseId
-  const [evidenceDescription, setEvidenceDescription] = useState(""); // Renamed from description
+  // const [evidenceDescription, setEvidenceDescription] = useState(""); // Renamed from description
   const [files, setFiles] = useState<File[]>([]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -15,19 +15,20 @@ export function AddEvidence() {
   };
 
   const handleSubmit = async () => {
-    if (!complaintId || !evidenceDescription || files.length === 0) {
+    if (!complaintId || files.length === 0) {
       alert("Please fill in all fields and upload at least one file.");
       return;
     }
 
     const formData = new FormData();
     formData.append("complaintId", complaintId); // Updated key
-    formData.append("evidenceDescription", evidenceDescription); // Updated key
+    // formData.append("evidenceDescription", evidenceDescription); // Updated key
     files.forEach((file) => {
       formData.append("evidence", file);
     });
 
     try {
+      console.log("Submitting evidence:", formData); // Debugging line
       const response = await axios.post("http://localhost:8000/addEvidence", formData, {
         withCredentials: true,
         headers: { "Content-Type": "multipart/form-data" },
@@ -36,7 +37,6 @@ export function AddEvidence() {
       if (response.status === 200) {
         alert("Evidence uploaded successfully!");
         setComplaintId(""); // Reset complaintId
-        setEvidenceDescription(""); // Reset evidenceDescription
         setFiles([]); // Reset files
       } else {
         alert("Failed to upload evidence. Please try again.");
@@ -48,7 +48,7 @@ export function AddEvidence() {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-xl">
+    <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
       <div className="mb-6">
         <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
           <Paperclip className="h-12 w-12 text-gray-600" />
@@ -75,21 +75,6 @@ export function AddEvidence() {
             onChange={(e) => setComplaintId(e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2A3B7D]"
             placeholder="Enter your complaint ID (e.g., XZ9B)"
-          />
-        </div>
-        <div className="space-y-2">
-          <label
-            htmlFor="evidenceDescription"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Evidence Description
-          </label>
-          <textarea
-            id="evidenceDescription"
-            value={evidenceDescription}
-            onChange={(e) => setEvidenceDescription(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2A3B7D]"
-            placeholder="Describe the evidence"
           />
         </div>
         <div className="border-2 border-dashed border-gray-300 rounded-md p-6 text-center cursor-pointer hover:bg-gray-50">

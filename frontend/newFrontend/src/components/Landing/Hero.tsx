@@ -39,7 +39,7 @@ export function Hero() {
               </p>
             </div>
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
-              <Button className="bg-[#FF4D4D] hover:bg-[#e63e3e] text-white cursor-pointer" >Get Started in 30 Seconds</Button>
+              <Button className="bg-[#FF4D4D] hover:bg-[#e63e3e] text-white cursor-pointer" onClick={() => navigate('/fileComplaint')} >Get Started in 30 Seconds</Button>
             </div>
               </div>
               <div className="flex justify-center">
