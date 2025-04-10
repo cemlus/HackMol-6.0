@@ -1,10 +1,9 @@
 import { Shield } from "lucide-react";
 import { Button } from "../ui/button";
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate } from "react-router-dom";
 
 export function Header() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white">
@@ -39,12 +38,24 @@ export function Header() {
             FAQs
           </a>
         </nav>
-        <Button className="hidden sm:block bg-[#2A3B7D] hover:bg-[#1e2a5a] cursor-pointer"
-        onClick={() => {
-          navigate('/signup')
-        }} >
-          Get Started
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            className="hidden sm:block bg-[#2A3B7D] hover:bg-[white] border hover:text-[#1e2a5a] cursor-pointer transition-all ease-in"
+            onClick={() => {
+              navigate("/signup/user");
+            }}
+          >
+            Citizens
+          </Button>
+          <Button
+            className="hidden sm:block bg-[#2A3B7D] hover:bg-[white] border hover:text-[#1e2a5a] cursor-pointer  transition-all ease-in"
+            onClick={() => {
+              navigate("/signup/police");
+            }}
+          >
+            Officers
+          </Button>
+        </div>
       </div>
     </header>
   );
