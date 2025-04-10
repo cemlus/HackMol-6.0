@@ -1,7 +1,30 @@
 import { Shield, Lock, Zap } from "lucide-react"
 import { Button } from "../ui/button"
+import { useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export function Hero() {
+
+    const navigate = useNavigate();
+    useEffect(() => {
+        const checkAuthentication = async () => {
+          try {
+            const response = await axios.get("http://localhost:8000/checkAuth", {
+              withCredentials: true,
+            });
+            if (!(response.status === 200 && response.data.authenticated && response.data.role === "user")) {
+              navigate("/signin/user");
+            }
+          } catch (error) {
+            console.error("Authentication check failed", error);
+            navigate("/signin/user");
+          }
+        };
+    
+        // checkAuthentication();
+      }, [navigate]);
+
     return (
         <section className="py-20 md:py-24 bg-gradient-to-b from-white to-gray-50 w-full">
           <div className="container mx-auto px-4 md:px-6">

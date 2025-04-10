@@ -167,10 +167,8 @@ const FileComplaintPage: React.FC = () => {
               >
                 <Button
                   variant="ghost"
-                  className="mb-6 text-[#2A3B7D]"
+                  className="mb-6 text-[#2A3B7D] hover: scale-[1.05] "
                   onClick={handleBack}
-                  whilehover={{ scale: 1.05 }}
-                  whiletap={{ scale: 0.95 }}
                 >
                   <ChevronLeft className="mr-2 h-4 w-4" /> Back to options
                 </Button>
