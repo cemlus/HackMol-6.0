@@ -4,6 +4,7 @@ import { SigninPage } from './components/pages/SigninPage';
 import { LandingPage } from './components/pages/LandingPage';
 import PoliceSignupPage from './components/pages/PoliceSignup';
 import { Dashboard } from './components/pages/Dashboard';
+import FileComplaintPage from './components/pages/FileComplaint';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path='/signin' element={<SigninPage/>} />
           <Route path='/dashboard/user' element={<Dashboard/>} />
           <Route path='/dashboard/police' element={<Dashboard />} />
+          <Route path='/fileComplaint' element={<FileComplaintPage/>} />
         </Routes>
       </BrowserRouter>
       
