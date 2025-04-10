@@ -40,7 +40,7 @@ export function Header() {
         </nav>
         <div className="flex gap-2">
           <Button
-            className="hidden sm:block bg-[#2A3B7D] hover:bg-[white] border hover:text-[#1e2a5a] cursor-pointer transition-all ease-in"
+            className="hidden sm:block text-[#1e2a5a] hover:bg-[#2A3B7D] bg-[white] border hover:text-[white] transition-all ease-in"
             onClick={() => {
               navigate("/signup/user");
             }}
@@ -48,7 +48,7 @@ export function Header() {
             Citizens
           </Button>
           <Button
-            className="hidden sm:block bg-[#2A3B7D] hover:bg-[white] border hover:text-[#1e2a5a] cursor-pointer  transition-all ease-in"
+            className="hidden sm:block text-[#1e2a5a] hover:bg-[#2A3B7D] bg-[white] border hover:text-[white] cursor-pointer  transition-all ease-in"
             onClick={() => {
               navigate("/signup/police");
             }}

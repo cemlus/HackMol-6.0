@@ -177,7 +177,12 @@ const FileComplaintPage: React.FC = () => {
               <AnimatePresence mode="wait">
                 {selectedMethod === "form" && (
                   <motion.div {...pageTransition}>
-                    <ComplaintForm />
+                    <ComplaintForm onSubmit={() => {
+                      // Handle form submission
+
+                      
+                      console.log('Form submitted');
+                    }} />
                   </motion.div>
                 )}
                 {selectedMethod === "voice" && (

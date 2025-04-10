@@ -112,13 +112,13 @@ const PoliceSignupPage = () => {
               Home
             </a>
             <a
-              href="#features"
+              href="/fileComplaint"
               className="text-sm font-medium hover:text-[#2A3B7D]"
             >
-              Features
+              File Complaint
             </a>
             <a
-              href="#about"
+              href="/#about"
               className="text-sm font-medium hover:text-[#2A3B7D]"
             >
               About

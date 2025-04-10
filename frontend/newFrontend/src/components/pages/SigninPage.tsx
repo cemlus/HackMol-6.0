@@ -1,18 +1,18 @@
-import type React from "react"
-import { useState } from "react"
-import axios from "axios"
-import { useForm } from "react-hook-form"
-import { Shield, AlertCircle, LogIn } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { cn } from "@/lib/utils"
-import { useNavigate } from "react-router-dom"
+import type React from "react";
+import { useState } from "react";
+import axios from "axios";
+import { useForm } from "react-hook-form";
+import { Shield, AlertCircle, LogIn } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
 
 type LoginFormData = {
-  email: string
-  password: string
-}
+  email: string;
+  password: string;
+};
 
 const SigninPage: React.FC = () => {
   const {
@@ -20,34 +20,37 @@ const SigninPage: React.FC = () => {
     handleSubmit,
     formState: { errors },
     setError,
-  } = useForm<LoginFormData>()
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [loginError, setLoginError] = useState<string | null>(null)
-  const navigate = useNavigate()
+  } = useForm<LoginFormData>();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loginError, setLoginError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const onSubmit = async (data: LoginFormData) => {
-    setIsSubmitting(true)
-    setLoginError(null)
-    
+    setIsSubmitting(true);
+    setLoginError(null);
+
     try {
-        const response = await axios.post("http://localhost:8000/login", formData, {
-            withCredentials: true,
-          });
-          if (response.data.err) {
-            setError(response.data.err);
-          } else if (response.data.redirect) {
-            navigate(`/${response.data.redirect}`);
-          }
+      const response = await axios.post("http://localhost:8000/login", data, {
+        withCredentials: true,
+      });
+      if (response.data.err) {
+        setError("root", {
+          type: "server",
+          message: response.data.err,
+        });
+      } else if (response.data.redirect) {
+        navigate(`/${response.data.redirect}`);
+      }
       // Handle successful login
-      navigate("/dashboard")
+      navigate("/dashboard");
     } catch (error) {
-      console.error("Login error:", error)
+      console.error("Login error:", error);
       // Set error message
-      setLoginError("Invalid email or password. Please try again.")
+      setLoginError("Invalid email or password. Please try again.");
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -65,10 +68,10 @@ const SigninPage: React.FC = () => {
               Home
             </a>
             <a
-              href="#features"
+              href="/fileComplaint"
               className="text-sm font-medium hover:text-[#2A3B7D]"
             >
-              Features
+              File Complaint
             </a>
             <a
               href="#about"
@@ -77,18 +80,27 @@ const SigninPage: React.FC = () => {
               About
             </a>
           </nav>
-          <div className="flex gap-4">
+          <div className="flex gap-2">
             <Button
-              className="bg-[#2A3B7D] hover:bg-[#1e2a5a] text-white"
+              className="hidden sm:block text-[#1e2a5a] hover:bg-[#2A3B7D] bg-[white] border hover:text-[white] transition-all ease-in"
               onClick={() => {
-                navigate("/signup");
+                navigate("/signup/user");
               }}
             >
-              Sign up
+              Citizens
+            </Button>
+            <Button
+              className="hidden sm:block text-[#1e2a5a] hover:bg-[#2A3B7D] bg-[white] border hover:text-[white] cursor-pointer  transition-all ease-in"
+              onClick={() => {
+                navigate("/signup/police");
+              }}
+            >
+              Officers
             </Button>
           </div>
         </div>
       </header>
+
       {/* Main Content */}
       <main className="flex-1 flex items-center justify-center py-10 px-4">
         <div className="w-full max-w-md">
@@ -99,8 +111,12 @@ const SigninPage: React.FC = () => {
                   <LogIn className="h-8 w-8 text-[#2A3B7D]" />
                 </div>
               </div>
-              <h1 className="text-2xl font-bold text-[#2A3B7D]">Welcome Back</h1>
-              <p className="text-gray-500 mt-2">Log in to your CivicShield account</p>
+              <h1 className="text-2xl font-bold text-[#2A3B7D]">
+                Welcome Back
+              </h1>
+              <p className="text-gray-500 mt-2">
+                Log in to your CivicShield account
+              </p>
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -113,13 +129,16 @@ const SigninPage: React.FC = () => {
                   id="email"
                   type="email"
                   placeholder="Enter email"
-                  className={cn("w-full", errors.email && "border-red-500 focus-visible:ring-red-500")}
-                  {...register("email", { 
-                    required: "Email is required", 
-                    pattern: { 
-                      value: /\S+@\S+\.\S+/, 
-                      message: "Please enter a valid email address" 
-                    } 
+                  className={cn(
+                    "w-full",
+                    errors.email && "border-red-500 focus-visible:ring-red-500"
+                  )}
+                  {...register("email", {
+                    required: "Email is required",
+                    pattern: {
+                      value: /\S+@\S+\.\S+/,
+                      message: "Please enter a valid email address",
+                    },
                   })}
                 />
                 {errors.email && (
@@ -141,9 +160,13 @@ const SigninPage: React.FC = () => {
                   id="password"
                   type="password"
                   placeholder="Enter password"
-                  className={cn("w-full", errors.password && "border-red-500 focus-visible:ring-red-500")}
-                  {...register("password", { 
-                    required: "Password is required" 
+                  className={cn(
+                    "w-full",
+                    errors.password &&
+                      "border-red-500 focus-visible:ring-red-500"
+                  )}
+                  {...register("password", {
+                    required: "Password is required",
                   })}
                 />
                 {errors.password && (
@@ -176,12 +199,19 @@ const SigninPage: React.FC = () => {
 
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">
-                Don't have an account? <span className="font-bold">{" "}Sign up</span> as a {" "}
-                <a href="/signup/user" className="text-[#2A3B7D] hover:underline font-medium">
+                Don't have an account?{" "}
+                <span className="font-semibold"> Sign up</span> as a{" "}
+                <a
+                  href="/signup/user"
+                  className="text-[#2A3B7D] hover:underline font-bold"
+                >
                   User
-                </a> 
-                <span> or </span> 
-                 <a href="/signup/police" className="text-[#2A3B7D] hover:underline font-medium">
+                </a>
+                <span> or </span>
+                <a
+                  href="/signup/police"
+                  className="text-[#2A3B7D] hover:underline font-bold"
+                >
                   Officer
                 </a>
               </p>
@@ -213,12 +243,14 @@ const SigninPage: React.FC = () => {
               <Shield className="h-5 w-5" />
               <span className="text-sm font-bold">CivicShield</span>
             </div>
-            <div className="text-sm text-white/70">© 2025 CivicShield. All rights reserved.</div>
+            <div className="text-sm text-white/70">
+              © 2025 CivicShield. All rights reserved.
+            </div>
           </div>
         </div>
       </footer>
     </div>
-  )
-}
+  );
+};
 
-export default SigninPage
+export default SigninPage;

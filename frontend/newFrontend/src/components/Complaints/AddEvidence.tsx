@@ -48,7 +48,7 @@ export function AddEvidence() {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
+    <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-xl">
       <div className="mb-6">
         <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
           <Paperclip className="h-12 w-12 text-gray-600" />
