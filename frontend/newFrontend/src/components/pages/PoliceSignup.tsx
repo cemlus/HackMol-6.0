@@ -21,12 +21,14 @@ const signupSchema = z.object({
   address: z.string().min(1, "Address is required"),
   signature: z.instanceof(File, { message: "Signature is required" })
     .refine(file => ["image/jpeg", "image/png", "application/pdf"].includes(file.type), 
-      "Please upload a JPG, PNG, or PDF file")
+      "Please upload a JPG, PNG, or PDF file"),
+  district: z.string().min(1, 'District of action is required'),
+  policeStationAddress: z.string().min(1, `Enter your Police Staion's Address`)
 })
 
 type SignupFormValues = z.infer<typeof signupSchema>
 
-const SignupPage = () => {
+const PoliceSignupPage = () => {
   const {
     register,
     handleSubmit,
@@ -67,7 +69,7 @@ const SignupPage = () => {
         formData.append(key, value)
       })
 
-      const response = await axios.post("http://localhost:8000/signup", formData, {
+      const response = await axios.post("http://localhost:8000/policesignup", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         }
@@ -97,8 +99,7 @@ const SignupPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      {/* Header (unchanged) */}
-      <header className="sticky top-0 z-50 w-full border-b bg-white">
+      <header className="sticky top-0 z-50 w-full border-b bg-white ">
         <div className="container flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-2">
             <Shield className="h-6 w-6 text-[#2A3B7D]" />
@@ -140,10 +141,10 @@ const SignupPage = () => {
       <main className="flex-1 flex items-center justify-center py-12 px-4">
         <div className="w-full max-w-4xl">
           <div className="bg-white shadow-xl rounded-lg p-8 flex gap-8">
-            <div className="flex-1 space-y-6 border-r border-gray-200 pr-8">
-              <div className="text-center mb-6">
+            <div className="flex-1 space-y-6 border-r border-gray-200 pr-8 ">
+              <div className="text-center mb-6 ">
                 <h1 className="text-2xl font-bold text-[#2A3B7D]">
-                  Create <span className="text-black font-bold underline">User</span> Account
+                  Create <span className="text-black underline font-bold">Officer</span> Account
                 </h1>
                 <p className="text-gray-500 mt-2">
                   Join CivicShield to report and track emergencies
@@ -196,6 +197,7 @@ const SignupPage = () => {
                   <ErrorMsg message={errors.phone?.message} />
                 </div>
 
+                {/* Address Field */}
                 <div className="space-y-2">
                   <Label htmlFor="address">Address</Label>
                   <Input
@@ -206,11 +208,35 @@ const SignupPage = () => {
                   />
                   <ErrorMsg message={errors.address?.message} />
                 </div>
+
+                
               </div>
             </div>
 
             <div className="flex-1 space-y-8 flex flex-col">
               <div className="flex-1">
+              <div className="space-y-2 my-4">
+                  <Label htmlFor="district">District</Label>
+                  <Input
+                    id="district"
+                    {...register("district")}
+                    className={cn("w-full", errors.email && "border-red-500")}
+                    placeholder="Jalandhar"
+                  />
+                  <ErrorMsg message={errors.district?.message} />
+                </div>
+
+              <div className="space-y-2 mt-4 mb-6">
+                  <Label htmlFor="policeStationAddress">Police Staion Address</Label>
+                  <Input
+                    id="policeStationAddress"
+                    {...register("policeStationAddress")}
+                    className={cn("w-full", errors.email && "border-red-500")}
+                    placeholder="Police Station Vaishali Nagar"
+                  />
+                  <ErrorMsg message={errors.policeStationAddress?.message} />
+                </div>
+
                 <Label htmlFor="signature" className="block mb-4">
                   Signature (JPG, PNG, or PDF)
                 </Label>
@@ -327,4 +353,4 @@ const ErrorMsg = ({ message }: { message?: string }) => (
   )
 )
 
-export default SignupPage
+export default PoliceSignupPage

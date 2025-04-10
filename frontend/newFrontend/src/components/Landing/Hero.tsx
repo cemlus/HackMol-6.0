@@ -12,8 +12,7 @@ export function Hero() {
                 Report Emergencies. Track Justice. No Tampering. No Delays.
               </h1>
               <p className="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                A secure, AI-driven platform to file and monitor FIRs via WhatsApp/SMS – trusted by 50,000+ citizens
-                globally.
+                A secure, AI-driven platform to file and monitor FIRs and Complaints online – trusted by 4 college students.
               </p>
             </div>
             <div className="flex flex-col gap-2 min-[400px]:flex-row">

@@ -33,24 +33,6 @@ export function FAQ() {
       }
     },
     {
-      value: "item-2",
-      question: "What if I don't have a smartphone?",
-      answer: {
-        content: [
-          "CivicShield is accessible through multiple channels:",
-          {
-            list: [
-              "Basic SMS from any mobile phone",
-              "Web portal from desktop computers",
-              "Community center partnerships"
-            ]
-          },
-          {
-          }
-        ]
-      }
-    },
-    {
       value: "item-3",
       question: "How does blockchain help?",
       answer: {
@@ -73,7 +55,7 @@ export function FAQ() {
 
   return (
     <section id="faq" className="py-20 bg-gray-100">
-      <div className="container px-4 md:px-6">
+      <div className="container pb-8 px-4 md:px-6">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -130,7 +112,10 @@ export function FAQ() {
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.3 }}
                     >
-                      {item.answer.content.map((contentPart : ContentPart, partIndex) => {
+                        
+                      {
+                        // @ts-ignore
+                      item.answer.content.map((contentPart : ContentPart, partIndex) => {
                         if (typeof contentPart === 'string') {
                           return <span key={partIndex}>{contentPart}</span>
                         }

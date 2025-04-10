@@ -51,7 +51,7 @@ export function Features () {
                 </CardHeader>
                 <CardContent>
                   <CardDescription>
-                    Monitor your case status, officer location, and response times in real-time.
+                    Monitor your case status, and officer details in real-time.
                   </CardDescription>
                 </CardContent>
               </Card>

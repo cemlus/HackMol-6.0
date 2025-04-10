@@ -1,33 +1,8 @@
 import { motion } from "framer-motion"
-import { ShieldCheck, Lock, Clock, Users } from "lucide-react"
-
 export function AboutUs() {
-  const features = [
-    {
-      icon: ShieldCheck,
-      title: "Immutable Records",
-      description: "Blockchain-powered FIR system prevents tampering"
-    },
-    {
-      icon: Lock,
-      title: "Transparent Tracking",
-      description: "Real-time case updates for citizens and authorities"
-    },
-    {
-      icon: Clock,
-      title: "Rapid Response",
-      description: "AI-powered urgency detection speeds up responses"
-    },
-    {
-      icon: Users,
-      title: "Community Focused",
-      description: "Designed with input from citizens and officers"
-    }
-  ]
 
   return (
     <section id="about" className="py-20 bg-white relative overflow-hidden">
-      {/* Animated background elements */}
       <div className="absolute inset-0 opacity-5 pointer-events-none">
         <div className="absolute w-[600px] h-[600px] bg-[#2A3B7D] rounded-full blur-3xl -top-40 -right-40" />
       </div>
@@ -40,7 +15,6 @@ export function AboutUs() {
           viewport={{ once: true, margin: "-100px" }}
           className="max-w-4xl mx-auto space-y-12"
         >
-          {/* Hero Section */}
           <div className="space-y-6 text-center">
             <motion.h2 
               className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-[#2A3B7D]"
@@ -52,7 +26,7 @@ export function AboutUs() {
               <span className="relative inline-block mx-2">
                 Emergency Response
                 <motion.div 
-                  className="absolute bottom-0 left-0 w-full h-1 bg-[#2A3B7D]"
+                  className="absolute bottom-[-1] left-0 w-full h-1 bg-[#2A3B7D]"
                   initial={{ scaleX: 0 }}
                   whileInView={{ scaleX: 1 }}
                   transition={{ duration: 1 }}
@@ -71,30 +45,10 @@ export function AboutUs() {
           </div>
 
           {/* Feature Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature, index) => (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="p-6 bg-white rounded-xl border border-gray-100 hover:border-[#2A3B7D] transition-all group"
-              >
-                <div className="flex flex-col items-center text-center space-y-4">
-                  <div className="p-3 bg-[#2A3B7D]/10 rounded-full">
-                    <feature.icon className="h-8 w-8 text-[#2A3B7D]" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-800">{feature.title}</h3>
-                  <p className="text-sm text-gray-600">{feature.description}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
+          
           {/* Story Sections */}
           <div className="space-y-8">
-            <motion.div
+            {/* <motion.div
               className="grid md:grid-cols-2 gap-8 items-center"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -112,7 +66,7 @@ export function AboutUs() {
               <div className="bg-gray-100 rounded-xl aspect-video flex items-center justify-center">
                 <span className="text-gray-400">Timeline Infographic</span>
               </div>
-            </motion.div>
+            </motion.div> */}
 
             <motion.div
               className="grid md:grid-cols-2 gap-8 items-center"
