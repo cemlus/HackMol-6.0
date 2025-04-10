@@ -1,16 +1,25 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import { Button } from './components/ui/button'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import SignupPage from './components/pages/SignupPage';
+import { SigninPage } from './components/pages/SigninPage';
+import { LandingPage } from './components/pages/LandingPage';
+import PoliceSignupPage from './components/pages/PoliceSignup';
+import { Dashboard } from './components/pages/Dashboard';
+import FileComplaintPage from './components/pages/FileComplaint';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div className='bg-gray-900 h-screen w-screen'>
-       <Button>hello</Button>
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<LandingPage/>} />
+          <Route path='/signup/user' element={<SignupPage/>} />
+          <Route path='/signup/police' element={<PoliceSignupPage/>} />
+          <Route path='/signin' element={<SigninPage/>} />
+          <Route path='/dashboard/user' element={<Dashboard/>} />
+          <Route path='/dashboard/police' element={<Dashboard />} />
+          <Route path='/fileComplaint' element={<FileComplaintPage/>} />
+        </Routes>
+      </BrowserRouter>
       
     </>
   )
