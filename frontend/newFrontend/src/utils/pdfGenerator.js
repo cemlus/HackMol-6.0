@@ -8,17 +8,17 @@ pdfMake.vfs = pdfFonts.vfs;
 export const generateFIRPDF = (complaintData) => {
   const {
     complaintId,
-    complainant,
+    // complainant,
     complaintType,
     description,
     proofURIs,
     location,
-    contactNumber,
-    victimSignatureURI,
+    // contactNumber,
+    // victimSignatureURI,
     status,
     // severity,
-    policeStation,
-    policeSignatureURI,
+    // policeStation,
+    // policeSignatureURI,
     rejectionReason,
     recordedTimestamp,
     lastUpdatedTimestamp,
@@ -35,12 +35,12 @@ export const generateFIRPDF = (complaintData) => {
         table: {
           widths: ['30%', '*'],
           body: [
-            ['Complainant Address', complainant],
+            // ['Complainant Address', complainant],
             ['Type of Complaint', complaintType],
             ['Description', description],
             ['Location', location],
-            ['Contact Number', contactNumber.toString()],
-            ['Victim Signature (URI)', victimSignatureURI],
+            // ['Contact Number', contactNumber.toString()],
+            // ['Victim Signature (URI)', victimSignatureURI],
             ['Proofs', proofURIs.join('\n')],
           ],
         },
@@ -58,16 +58,16 @@ export const generateFIRPDF = (complaintData) => {
         },
       },
 
-      { text: 'Police Information', style: 'subheader', margin: [0, 15, 0, 5] },
-      {
-        table: {
-          widths: ['30%', '*'],
-          body: [
-            ['Police Station Address', policeStation],
-            ['Police Signature (URI)', policeSignatureURI],
-          ],
-        },
-      },
+    //   { text: 'Police Information', style: 'subheader', margin: [0, 15, 0, 5] },
+    //   {
+    //     table: {
+    //       widths: ['30%', '*'],
+    //       body: [
+    //         ['Police Station Address', policeStation],
+    //         ['Police Signature (URI)', policeSignatureURI],
+    //       ],
+    //     },
+    //   },
 
       { text: 'Timestamps', style: 'subheader', margin: [0, 15, 0, 5] },
       {

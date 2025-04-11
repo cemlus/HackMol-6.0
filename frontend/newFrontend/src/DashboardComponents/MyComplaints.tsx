@@ -49,28 +49,7 @@ const MyComplaints: React.FC = () => {
       setModalOpen(true);
     };
 
-    const complaintData = {
-      complaintId: selectedComplaint?.id,
-      // complainant: "0x1234abcd...",
-      complaintType:selectedComplaint.complaintType ,
-      description: selectedComplaint.description,
-      proofURIs: selectedComplaint.proofURIs,
-      location: selectedComplaint.location,
-      // contactNumber: selectedComplaint.contactNumber,
-      victimSignatureURI: selectedComplaint.victimSignatureURI,
-      status: getStatusText(selectedComplaint.status),
-      // severity: ,
-      // policeStation: "0x5678efgh...",
-      policeSignatureURI: selectedComplaint?.policeSignatureURI,
-      rejectionReason: selectedComplaint?.rejectionReason,
-      recordedTimestamp:new Date(selectedComplaint.recordedTimestamp).toLocaleString() ,
-      lastUpdatedTimestamp: selectedComplaint.lastUpdatedTimestamp
-      ? new Date(selectedComplaint.lastUpdatedTimestamp).toLocaleString()
-      : "N/A",
-      processedTimestamp: selectedComplaint.processedTimestamp
-      ? new Date(selectedComplaint.processedTimestamp).toLocaleString()
-      : "Unknown, No steps taken",
-    };
+    
     
 
     const ComplaintDetailsModal = () => (
@@ -274,6 +253,29 @@ const MyComplaints: React.FC = () => {
       default:
         return <Clock className="h-4 w-4" />;
     }
+  };
+
+  const complaintData = {
+    complaintId: selectedComplaint.id,
+    // complainant: "0x1234abcd...",
+    complaintType:selectedComplaint.complaintType ,
+    description: selectedComplaint.description,
+    proofURIs: selectedComplaint.proofURIs,
+    location: selectedComplaint.location,
+    // contactNumber: selectedComplaint.contactNumber,
+    // victimSignatureURI: selectedComplaint.victimSignatureURI,
+    status: getStatusText(selectedComplaint.status),
+    // severity: ,
+    // policeStation: "0x5678efgh...",
+    // policeSignatureURI: selectedComplaint?.policeSignatureURI,
+    rejectionReason: selectedComplaint?.rejectionReason,
+    recordedTimestamp:new Date(selectedComplaint.recordedTimestamp).toLocaleString() ,
+    lastUpdatedTimestamp: selectedComplaint.lastUpdatedTimestamp
+    ? new Date(selectedComplaint.lastUpdatedTimestamp).toLocaleString()
+    : "N/A",
+    processedTimestamp: selectedComplaint.processedTimestamp
+    ? new Date(selectedComplaint.processedTimestamp).toLocaleString()
+    : "Unknown, No steps taken",
   };
 
   
