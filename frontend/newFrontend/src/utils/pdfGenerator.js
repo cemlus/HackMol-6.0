@@ -1,8 +1,9 @@
-// firPdfGenerator.js
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
 
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
+// 👇 This is the correct way to assign vfs
+pdfMake.vfs = pdfFonts.vfs;
+
 
 export const generateFIRPDF = (complaintData) => {
   const {
