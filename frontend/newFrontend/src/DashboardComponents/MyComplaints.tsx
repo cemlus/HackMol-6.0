@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils";
 import { useIsMobile } from "../components/hooks/UseIsMobile";
 import { useNavigate } from "react-router-dom";
 import { Dialog, DialogTitle, DialogHeader, DialogContent } from "../components/ui/dialog";
+import {generateFIRPDF} from "../utils/pdfGenerator.js";
 
 export interface formattedComplaint {
     id: string;
@@ -47,6 +48,8 @@ const MyComplaints: React.FC = () => {
       setSelectedComplaint(complaint);
       setModalOpen(true);
     };
+
+    
     
 
     const ComplaintDetailsModal = () => (
@@ -153,7 +156,11 @@ const MyComplaints: React.FC = () => {
                     <Paperclip className="h-4 w-4 mr-2" />
                     Add Evidence
                   </Button>
-                  <Button className="flex-1 bg-[#2A3B7D] hover:bg-[#1e2a5a]">
+                  <Button className="flex-1 bg-[#2A3B7D] hover:bg-[#1e2a5a]"  onClick={() => {
+    const data = getComplaintData(selectedComplaint);
+    if (data) generateFIRPDF(data);
+    else console.error("No complaint selected!");
+  }} >
                     Download PDF
                   </Button>
                 </div>
@@ -250,6 +257,27 @@ const MyComplaints: React.FC = () => {
       default:
         return <Clock className="h-4 w-4" />;
     }
+  };
+
+  const getComplaintData = (selectedComplaint: any) => {
+    if (!selectedComplaint) return null;
+  
+    return {
+      complaintId: selectedComplaint.id,
+      complaintType: selectedComplaint.complaintType,
+      description: selectedComplaint.description,
+      proofURIs: selectedComplaint.proofURIs,
+      location: selectedComplaint.location,
+      status: getStatusText(selectedComplaint.status),
+      rejectionReason: selectedComplaint?.rejectionReason,
+      recordedTimestamp: new Date(selectedComplaint.recordedTimestamp).toLocaleString(),
+      lastUpdatedTimestamp: selectedComplaint.lastUpdatedTimestamp
+        ? new Date(selectedComplaint.lastUpdatedTimestamp).toLocaleString()
+        : "N/A",
+      processedTimestamp: selectedComplaint.processedTimestamp
+        ? new Date(selectedComplaint.processedTimestamp).toLocaleString()
+        : "Unknown, No steps taken",
+    };
   };
 
   

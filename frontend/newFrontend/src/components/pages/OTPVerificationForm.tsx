@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom";
 
 interface OTPVerificationFormProps {
   aadhaarNumber: string
@@ -9,6 +10,8 @@ const OTPVerificationForm: React.FC<OTPVerificationFormProps> = ({ aadhaarNumber
   const [otp, setOtp] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
+
+  const navigate = useNavigate();
 
   const handleVerify = async () => {
     if (!otp || otp.length !== 6) {
@@ -31,6 +34,7 @@ const OTPVerificationForm: React.FC<OTPVerificationFormProps> = ({ aadhaarNumber
       }
 
       onSuccess()
+      navigate("/signin");
     } catch (error: any) {
       setError(error.message)
     } finally {

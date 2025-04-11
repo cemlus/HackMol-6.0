@@ -184,6 +184,15 @@ const PoliceDashboard: React.FC = () => {
               </div>
 
               <div>
+                <p className="text-sm font-medium text-gray-500">
+                  Severity
+                </p>
+                <p className={`text-sm ${severityColor(selectedComplaint.severity)}`}>
+                {selectedComplaint.severity}
+                </p>
+              </div>
+
+              <div>
 
                 {/* make sure if this does exost or not ----------------------- DOUBT */}
                 {/* <p className="text-sm font-medium text-gray-500">
@@ -343,6 +352,8 @@ const PoliceDashboard: React.FC = () => {
         return "Accepted";
       case "2":
         return "Rejected";
+      case "3":
+        return "Escalated";
       default:
         return "Unknown";
     }
@@ -393,11 +404,24 @@ const PoliceDashboard: React.FC = () => {
     }
   };
 
+  const severityColor = (severity: string) =>{
+    switch(severity){
+      case "low":
+        return "bg-gray-100 text-gray-800";
+      case "moderate":
+        return "bg-yellow-100 text-yellow-800";
+      case "high":
+        return "bg-red-100 text-red-800";
+      default:
+        return ""
+    }
+  }
+
   return (
     <div className="space-y-6 px-4 py-4">
       <ComplaintDetailsModal />
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <h1 className="text-2xl font-bold text-gray-900">My Complaints</h1>
+        <h1 className="text-2xl font-bold text-gray-900">Police Dashboard</h1>
 
         <div className="flex items-center gap-2">
           <DropdownMenu>
