@@ -310,39 +310,39 @@ const PoliceDashboard: React.FC = () => {
     </Dialog>
   );
 
-  // useEffect(() => {
-  //   const checkAuthentication = async () => {
-  //     try {
-  //       const response = await axios.get("https://backend.topishukla.xyz/checkAuth", {
-  //         withCredentials: true,
-  //       });
-  //       console.log(response.data);
-  //       if (
-  //         response.status === 200 &&
-  //         response.data.authenticated &&
-  //         response.data.role === "police"
-  //       ) {
-  //         const complaintsRes = await axios.get(
-  //           "https://backend.topishukla.xyz/getComplaintsBypolicestation",
-  //           {
-  //             withCredentials: true,
-  //           }
-  //         );
-  //         console.log(complaintsRes.data.complaints.length);
-  //         setComplaints(complaintsRes.data.complaints);
-  //         console.log(complaints);
-  //       } else {
-  //         navigate("/signin");
-  //       }
-  //     } catch (error) {
-  //       console.error("Authentication check failed", error);
-  //       navigate("/signin");
-  //     }
-  //   };
+  useEffect(() => {
+    const checkAuthentication = async () => {
+      try {
+        const response = await axios.get("https://backend.topishukla.xyz/checkAuth", {
+          withCredentials: true,
+        });
+        console.log(response.data);
+        if (
+          response.status === 200 &&
+          response.data.authenticated &&
+          response.data.role === "police"
+        ) {
+          const complaintsRes = await axios.get(
+            "https://backend.topishukla.xyz/getComplaintsBypolicestation",
+            {
+              withCredentials: true,
+            }
+          );
+          console.log(complaintsRes.data.complaints.length);
+          setComplaints(complaintsRes.data.complaints);
+          console.log(complaints);
+        } else {
+          navigate("/signin");
+        }
+      } catch (error) {
+        console.error("Authentication check failed", error);
+        navigate("/signin");
+      }
+    };
 
-  //   checkAuthentication();
-  //   setComplaintsNumber(complaints.length);
-  // }, [complaints.length, navigate]);
+    checkAuthentication();
+    setComplaintsNumber(complaints.length);
+  }, [complaints.length, navigate]);
 
   const getStatusText = (status: any) => {
     switch (status) {
