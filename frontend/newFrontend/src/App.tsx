@@ -25,8 +25,8 @@ function App() {
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route index element={<Dashboard />} />
             <Route path="myComplaints" element={<MyComplaints/>} />
-            <Route path="nearestPoliceStations" element={<NearestStations/>} />
-            <Route path="profileSettings" element={<ProfileSettings/>} />
+            {/* <Route path="nearestPoliceStations" element={<NearestStations/>} /> */}
+            {/* <Route path="profileSettings" element={<ProfileSettings/>} /> */}
           </Route>
           <Route path='/policeDashboard' element={<PoliceDashboard/>} />
           {/* Redirect root to dashboard */}

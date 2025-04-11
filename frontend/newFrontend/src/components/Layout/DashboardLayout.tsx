@@ -89,7 +89,7 @@ const DashboardLayout: React.FC = () => {
               <FileText className="h-5 w-5" />
               My Complaints
             </NavLink>
-            <NavLink
+            {/* <NavLink
               to="/dashboard/nearestPoliceStations"
               className={({ isActive }) =>
                 cn(
@@ -103,8 +103,8 @@ const DashboardLayout: React.FC = () => {
             >
               <MapPin className="h-5 w-5" />
               Nearest Stations
-            </NavLink>
-            <NavLink
+            </NavLink> */}
+            {/* <NavLink
               to="/dashboard/profileSettings"
               className={({ isActive }) =>
                 cn(
@@ -118,7 +118,7 @@ const DashboardLayout: React.FC = () => {
             >
               <Settings className="h-5 w-5" />
               Profile Settings
-            </NavLink>
+            </NavLink> */}
             
           </nav>
 

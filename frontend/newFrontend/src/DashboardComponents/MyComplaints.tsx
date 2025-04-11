@@ -50,7 +50,7 @@ const MyComplaints: React.FC = () => {
     };
 
     const complaintData = {
-      complaintId: selectedComplaint.id,
+      complaintId: selectedComplaint?.id,
       // complainant: "0x1234abcd...",
       complaintType:selectedComplaint.complaintType ,
       description: selectedComplaint.description,
