@@ -52,7 +52,7 @@ export const generateFIRPDF = (complaintData) => {
           widths: ['30%', '*'],
           body: [
             ['Status', status],
-            ['Severity', severity],
+            // ['Severity', severity],
             ['Rejection Reason', rejectionReason || 'N/A'],
           ],
         },
