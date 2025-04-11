@@ -207,7 +207,7 @@ const ComplaintForm = () => {
   // Handle form submission
   const submitMutation = useMutation({
     mutationFn: async (data: ComplaintFormData) => {
-      // make the Backend/Blockchain API call here
+      // make the Backend/Blockchain API call here 
       return new Promise<string>((resolve) => {
         setTimeout(() => {
           // Generate a random case ID
