@@ -74,9 +74,9 @@ export const generateFIRPDF = (complaintData) => {
         table: {
           widths: ['30%', '*'],
           body: [
-            ['Recorded On', new Date(Number(recordedTimestamp) * 1000).toString()],
-            ['Last Updated', new Date(Number(lastUpdatedTimestamp) * 1000).toString()],
-            ['Processed On', new Date(Number(processedTimestamp) * 1000).toString()],
+            ['Recorded On', recordedTimestamp],
+            ['Last Updated', lastUpdatedTimestamp],
+            ['Processed On', processedTimestamp],
           ],
         },
       },
