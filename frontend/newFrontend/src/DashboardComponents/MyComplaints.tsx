@@ -156,7 +156,11 @@ const MyComplaints: React.FC = () => {
                     <Paperclip className="h-4 w-4 mr-2" />
                     Add Evidence
                   </Button>
-                  <Button className="flex-1 bg-[#2A3B7D] hover:bg-[#1e2a5a]" onClick={() => generateFIRPDF(complaintData)} >
+                  <Button className="flex-1 bg-[#2A3B7D] hover:bg-[#1e2a5a]"  onClick={() => {
+    const data = getComplaintData(selectedComplaint);
+    if (data) generateFIRPDF(data);
+    else console.error("No complaint selected!");
+  }} >
                     Download PDF
                   </Button>
                 </div>
@@ -255,27 +259,25 @@ const MyComplaints: React.FC = () => {
     }
   };
 
-  const complaintData = {
-    complaintId: selectedComplaint.id,
-    // complainant: "0x1234abcd...",
-    complaintType:selectedComplaint.complaintType ,
-    description: selectedComplaint.description,
-    proofURIs: selectedComplaint.proofURIs,
-    location: selectedComplaint.location,
-    // contactNumber: selectedComplaint.contactNumber,
-    // victimSignatureURI: selectedComplaint.victimSignatureURI,
-    status: getStatusText(selectedComplaint.status),
-    // severity: ,
-    // policeStation: "0x5678efgh...",
-    // policeSignatureURI: selectedComplaint?.policeSignatureURI,
-    rejectionReason: selectedComplaint?.rejectionReason,
-    recordedTimestamp:new Date(selectedComplaint.recordedTimestamp).toLocaleString() ,
-    lastUpdatedTimestamp: selectedComplaint.lastUpdatedTimestamp
-    ? new Date(selectedComplaint.lastUpdatedTimestamp).toLocaleString()
-    : "N/A",
-    processedTimestamp: selectedComplaint.processedTimestamp
-    ? new Date(selectedComplaint.processedTimestamp).toLocaleString()
-    : "Unknown, No steps taken",
+  const getComplaintData = (selectedComplaint: any) => {
+    if (!selectedComplaint) return null;
+  
+    return {
+      complaintId: selectedComplaint.id,
+      complaintType: selectedComplaint.complaintType,
+      description: selectedComplaint.description,
+      proofURIs: selectedComplaint.proofURIs,
+      location: selectedComplaint.location,
+      status: getStatusText(selectedComplaint.status),
+      rejectionReason: selectedComplaint?.rejectionReason,
+      recordedTimestamp: new Date(selectedComplaint.recordedTimestamp).toLocaleString(),
+      lastUpdatedTimestamp: selectedComplaint.lastUpdatedTimestamp
+        ? new Date(selectedComplaint.lastUpdatedTimestamp).toLocaleString()
+        : "N/A",
+      processedTimestamp: selectedComplaint.processedTimestamp
+        ? new Date(selectedComplaint.processedTimestamp).toLocaleString()
+        : "Unknown, No steps taken",
+    };
   };
 
   
