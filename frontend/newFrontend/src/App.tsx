@@ -10,6 +10,7 @@ import MyComplaints from './DashboardComponents/MyComplaints';
 import NearestStations from './DashboardComponents/NearestPoliceStations';
 import PoliceDashboard from './components/pages/PoliceDashboard';
 import ProfileSettings from './DashboardComponents/ProfileSettings';
+import SignupWithAadhaar from './components/pages/aadharSignup';
 
 function App() {
   return (
@@ -17,7 +18,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<LandingPage/>} />
-          <Route path='/signup/user' element={<SignupPage/>} />
+          <Route path='/signup/user' element={<SignupWithAadhaar/>} />
+          {/* <Route path='/signupAadhar' element={<SignupWithAadhaar/>} /> */}
           <Route path='/signup/police' element={<PoliceSignupPage/>} />
           <Route path='/signin' element={<SigninPage/>} />
           <Route path="/dashboard" element={<DashboardLayout />}>

@@ -62,6 +62,7 @@ const LocationMarker = ({ position, setPosition }: any) => {
 const ComplaintForm = () => {
   const [currentStep, setCurrentStep] = useState(1)
   const [aiSuggestions, setAiSuggestions] = useState([])
+  const [chargesSuggestions, setChargesSuggestions] = useState([])
   const [position, setPosition] = useState<{ lat: number; lng: number } | null>(null)
   const [isGettingLocation, setIsGettingLocation] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -129,8 +130,13 @@ const ComplaintForm = () => {
         withCredentials: true,
       })
 
-      setAiSuggestions(response.data.questions)
+      const response2 = await axios.post("http://localhost:8000/ipccharges", formData,{
+        withCredentials: true,
+      })
 
+
+      setAiSuggestions(response.data.questions)
+      setChargesSuggestions(response2.data.charges)
       // console.log(response.data)
 
       return response.data
@@ -152,6 +158,9 @@ const ComplaintForm = () => {
   // Handle AI suggestion click
   const handleSuggestionClick = (suggestion: string) => {
     setValue("description", `${description}${suggestion}`)
+  }
+  const handleChargeClick = (charge: string) => {
+    setValue("description", `${description}${charge}`)
   }
 
   // Handle "happening now" toggle
@@ -484,6 +493,20 @@ const ComplaintForm = () => {
                         onClick={() => handleSuggestionClick(suggestion)}
                       >
                         {suggestion}
+                      </Button>
+                    ))}
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {chargesSuggestions.map((charge, index) => (
+                      <Button
+                        key={index}
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        className="text-xs"
+                        onClick={() => handleChargeClick(charge)}
+                      >
+                        {charge}
                       </Button>
                     ))}
                   </div>

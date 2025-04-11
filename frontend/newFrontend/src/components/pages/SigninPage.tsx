@@ -42,7 +42,7 @@ const SigninPage: React.FC = () => {
         navigate(`/${response.data.redirect}`);
       }
       // Handle successful login
-      navigate("/dashboard");
+      // navigate("/dashboard");
     } catch (error) {
       console.error("Login error:", error);
       // Set error message

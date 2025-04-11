@@ -1,4 +1,3 @@
-
 import type React from "react"
 import { useState } from "react"
 import { Outlet, NavLink, useNavigate } from "react-router-dom"
@@ -91,7 +90,7 @@ const DashboardLayout: React.FC = () => {
               My Complaints
             </NavLink>
             <NavLink
-              to="/dashboard/nearestStations"
+              to="/dashboard/nearestPoliceStations"
               className={({ isActive }) =>
                 cn(
                   "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
