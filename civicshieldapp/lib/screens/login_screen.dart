@@ -1,255 +1,114 @@
-
-// import 'package:flutter/material.dart';
-// import 'dashboard_screen.dart';
-// import 'signup_screen.dart';
-
-// class LoginScreen extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: const Color(0xFFE0F7FA), // Light blue background color
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             // Logo Image
-//             Image.asset(
-//               'assets/CivicShield.png', // Path to the CivicShield logo
-//               width: 500,
-//               height: 500,
-//             ),
-//             // const SizedBox(height: 10),
-
-//             // App Name
-//             // const SizedBox(height: 40),
-
-//             // Buttons Row
-//             Row(
-//               mainAxisAlignment: MainAxisAlignment.center,
-//               children: [
-//                 // Login Button
-//                 ElevatedButton(
-//                   onPressed: () {
-//                     // Navigate to Dashboard Screen
-//                     Navigator.push(
-//                       context,
-//                       MaterialPageRoute(builder: (context) => DashboardScreen()),
-//                     );
-//                   },
-//                   style: ElevatedButton.styleFrom(
-//                     padding:
-//                         const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-//                     backgroundColor: Colors.blue.shade300,
-//                     shape: RoundedRectangleBorder(
-//                       borderRadius: BorderRadius.circular(10),
-//                     ),
-//                   ),
-//                   child: const Text(
-//                     'LOGIN',
-//                     style: TextStyle(fontSize: 16, color: Colors.white),
-//                   ),
-//                 ),
-//                 const SizedBox(width: 20), // Space between buttons
-
-//                 // Sign Up Button
-//                 ElevatedButton(
-//                   onPressed: () {
-//                     // Navigate to Signup Screen
-//                     Navigator.push(
-//                       context,
-//                       MaterialPageRoute(builder: (context) => SignupScreen()),
-//                     );
-//                   },
-//                   style: ElevatedButton.styleFrom(
-//                     padding:
-//                         const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-//                     backgroundColor: Colors.blue.shade300,
-//                     shape: RoundedRectangleBorder(
-//                       borderRadius: BorderRadius.circular(10),
-//                     ),
-//                   ),
-//                   child: const Text(
-//                     'Sign Up',
-//                     style: TextStyle(fontSize: 16, color: Colors.white),
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-
-// import 'package:flutter/material.dart';
-// import 'dashboard_screen.dart';
-// import 'signup_screen.dart';
-
-// class LoginScreen extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: const Color(0xFFE0F7FA), // Light blue background color
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             // Logo Image
-//             Image.asset(
-//               'assets/CivicShield.png', // Path to the CivicShield logo
-//               width: 500,
-//               height: 500,
-//             ),
-//             // const SizedBox(height: 10),
-
-//             // App Name
-//             // const SizedBox(height: 40),
-
-//             // Buttons Row
-//             Row(
-//               mainAxisAlignment: MainAxisAlignment.center,
-//               children: [
-//                 // Login Button
-//                 ElevatedButton(
-//                   onPressed: () {
-//                     // Navigate to Dashboard Screen
-//                     Navigator.push(
-//                       context,
-//                       MaterialPageRoute(builder: (context) => DashboardScreen()),
-//                     );
-//                   },
-//                   style: ElevatedButton.styleFrom(
-//                     padding:
-//                         const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-//                     backgroundColor: Colors.blue.shade300,
-//                     shape: RoundedRectangleBorder(
-//                       borderRadius: BorderRadius.circular(10),
-//                     ),
-//                   ),
-//                   child: const Text(
-//                     'LOGIN',
-//                     style: TextStyle(fontSize: 16, color: Colors.white),
-//                   ),
-//                 ),
-//                 const SizedBox(width: 20), // Space between buttons
-
-//                 // Sign Up Button
-//                 ElevatedButton(
-//                   onPressed: () {
-//                     // Navigate to Signup Screen
-//                     Navigator.push(
-//                       context,
-//                       MaterialPageRoute(builder: (context) => SignupScreen()),
-//                     );
-//                   },
-//                   style: ElevatedButton.styleFrom(
-//                     padding:
-//                         const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-//                     backgroundColor: Colors.blue.shade300,
-//                     shape: RoundedRectangleBorder(
-//                       borderRadius: BorderRadius.circular(10),
-//                     ),
-//                   ),
-//                   child: const Text(
-//                     'Sign Up',
-//                     style: TextStyle(fontSize: 16, color: Colors.white),
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-
 import 'package:flutter/material.dart';
-import 'login_page.dart';
+import 'dashboard_screen.dart';
 import 'signup_screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  bool isLoggingIn = false;
+
+  // Function to handle login
+  void _login() {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        isLoggingIn = true;
+      });
+
+      // Simulate a login process (e.g., API call)
+      Future.delayed(Duration(seconds: 2), () {
+        setState(() {
+          isLoggingIn = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Login successful!')),
+        );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => DashboardScreen()),
+        );
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE0F7FA), // Light blue background color
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Logo Image
-            Image.asset(
-              'assets/CivicShield.png', // Path to the CivicShield logo
-              width: 150,
-              height: 150,
-            ),
-            const SizedBox(height: 20),
-
-            // App Name
-            Text(
-              'CivicShield',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
+      appBar: AppBar(
+        title: Text('Login'),
+        backgroundColor: Colors.blue,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            children: [
+              Text(
+                'Welcome Back!',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.blue.shade700),
               ),
-            ),
-            const SizedBox(height: 40),
-
-            // Buttons Row
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Login Button
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginPage()),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                    backgroundColor: Colors.blue.shade300,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+              SizedBox(height: 20),
+              TextFormField(
+                controller: _emailController,
+                decoration: InputDecoration(labelText: 'Email'),
+                keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter your email';
+                  } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                    return 'Please enter a valid email';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 10),
+              TextFormField(
+                controller: _passwordController,
+                decoration: InputDecoration(labelText: 'Password'),
+                obscureText: true,
+                validator: (value) => value!.length < 6 ? 'Password must be at least 6 characters' : null,
+              ),
+              SizedBox(height: 20),
+              isLoggingIn
+                  ? Center(child: CircularProgressIndicator())
+                  : ElevatedButton(
+                      onPressed: _login,
+                      child: Text('Login'),
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(vertical: 16.0),
+                        textStyle:
+                            TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Don't have an account? "),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SignupScreen()),
+                      );
+                    },
+                    child: Text(
+                      'Sign Up',
+                      style:
+                          TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  child: const Text(
-                    'LOGIN',
-                    style: TextStyle(fontSize: 16, color: Colors.white),
-                  ),
-                ),
-                const SizedBox(width: 20), // Space between buttons
-
-                // Sign Up Button
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SignupScreen()),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                    backgroundColor: Colors.blue.shade300,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  child: const Text(
-                    'Sign Up',
-                    style: TextStyle(fontSize: 16, color: Colors.white),
-                  ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
