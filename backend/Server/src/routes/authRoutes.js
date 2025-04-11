@@ -231,7 +231,7 @@ router.post('/login', async (req, res) => {
                     res.cookie("refreshToken", refreshToken, { httpOnly: true, sameSite: "Lax" });
                     if(user.role==="police"){
                         console.log("Police login successful")
-                        res.json({ redirect: "dashboardPolice" });
+                        res.json({ redirect: "policeDashboard" });
                     }else{
                         console.log("User login successful")
                         res.json({ redirect: "dashboard" });
@@ -357,5 +357,76 @@ router.post("/logout", (req, res) => {
     res.json({ message: "Logout successful" });
     
 });
+
+
+import { aadhaarData } from '../../data/aadhaarMocks.js';
+import { client as twilioClient, twilioPhone } from '../utils/twilioClient.js';
+const otpStore = new Map();
+
+router.post("/aadhaar/verify", (req, res) => {
+    const { aadhaar_number } = req.body;
+  
+    const user = aadhaarData.find(u => u.aadhaar_number === aadhaar_number);
+    if (!user) {
+      return res.status(404).json({ error: "Aadhaar number not found" });
+    }
+  
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    otpStore.set(aadhaar_number, otp);
+    console.log("OTP generated:", otp);
+  
+    console.log(`OTP for ${aadhaar_number}: ${otp}`);
+    // res.json({ message: "OTP sent to registered mobile number" });
+
+    twilioClient.messages
+    .create({
+      body: `Your verification OTP is: ${otp}`,
+      from: twilioPhone,
+      to: `+91${user.mobile}`, // India number format
+    })
+    .then(message => {
+      console.log("OTP sent:", message.sid);
+      res.json({ message: "OTP sent to registered mobile number" });
+    })
+    .catch(error => {
+      console.error("Twilio Error:", error);
+      res.status(500).json({ error: "Failed to send OTP" });
+    });
+  });
+  
+  // Aadhaar OTP verification and registration
+  router.post("/aadhaar/verifyOtp", async (req, res) => {
+    const { aadhaar_number, otp } = req.body;
+    const user = aadhaarData.find(u => u.aadhaar_number === aadhaar_number);
+  
+    if (!user) return res.status(404).json({ error: "Invalid Aadhaar number" });
+  
+    const storedOtp = otpStore.get(aadhaar_number);
+    if (storedOtp !== otp) {
+      return res.status(401).json({ error: "Incorrect OTP" });
+    }
+  
+    const existing = await User.findOne({ email: user.email });
+    if (existing) return res.json({ err: "User already exists, please login" });
+  
+    const plainPassword = aadhaar_number.replace(/\s/g, "");
+    console.log("PlainPassword:", plainPassword);
+    const hashedPassword = await bcrypt.hash(plainPassword, 10);
+  
+    const newUser = await User.create({
+      username: user.name,
+      email: user.email,
+      password: hashedPassword,
+      phone: user.mobile,
+      address: `${user.address.house}, ${user.address.street}, ${user.address.locality}, ${user.address.district}, ${user.address.state} - ${user.address.pincode}`,
+      signatureUrl: user.biometric.facial_photo, // Or use .fingerprints
+      role: "user"
+    });
+  
+    await FIR.create({ user: newUser._id, fir: [] });
+    otpStore.delete(aadhaar_number);
+  
+    res.json({ message: "Signup successful", redirect: "login" });
+  });
 
 export default router;

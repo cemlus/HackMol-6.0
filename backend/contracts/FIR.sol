@@ -1,16 +1,14 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.18;
+pragma solidity ^0.8.0;
 
 
 contract FIRSystem {
     address public immutable owner;
 
-    enum Status {Pending, Accepted, Rejected}
+    enum Status {Pending, Accepted, Rejected, Escalated}
 
     struct Complaint {
         string complaintId;
-
-        //VictimInfo
         address complainant;
         string complaintType;
         string description;
@@ -18,17 +16,11 @@ contract FIRSystem {
         string location;
         uint64 contactNumber;
         string victimSignatureURI;
-
-        //Others
-        Status status;
         string severity;
-
-        //PoliceInfo
         address policeStation;
         string policeSignatureURI;
+        Status status;
         string rejectionReason;
-
-        //TimeStamps
         uint40 recordedTimestamp;  
         uint40 lastUpdatedTimestamp;
         uint40 processedTimestamp; 
@@ -49,10 +41,11 @@ contract FIRSystem {
     mapping(string => uint32) public complaintIds;
     mapping(address => bool) public policeStations;
 
-    event ComplaintFiled(string indexed complaintId, address indexed complainant, string complaintType, string description, string severity, uint40 timestamp);
-    event EvidenceAdded(string indexed complaintId, string[] proofURIs);
-    event ComplaintAccepted(string indexed complaintId, address indexed policeStation, string policeSignatureURI, uint40 timestamp);
-    event ComplaintRejected(string indexed complaintId, address indexed policeStation, string rejectionReason, uint40 timestamp);
+    event ComplaintFiled(string complaintId, address indexed complainant, string complaintType, string description, string severity, uint40 timestamp);
+    event EvidenceAdded(string complaintId, string[] proofURIs);
+    event ComplaintAccepted(string complaintId, address indexed policeStation, string policeSignatureURI, uint40 timestamp);
+    event ComplaintRejected(string complaintId, address indexed policeStation, string rejectionReason, uint40 timestamp);
+    event ComplaintEscalated(string complaintId, address indexed escalatedBy, uint40 timestamp);
 
     modifier onlyPolice() {
         // if (!policeStations[msg.sender]) revert NotPoliceStation();
@@ -79,83 +72,94 @@ contract FIRSystem {
     }
 
     bytes1 private constant DIGIT_0 = bytes1(uint8(48));
-    bytes private constant PREFIX = bytes("COMP-");
+bytes private constant PREFIX = bytes("COMP-");
 
-    function generateComplaintId(uint32 _count, uint40 _timestamp) internal pure returns (string memory) {
-        // Convert timestamp + count to bytes
-        bytes memory countBytes = uintToBytes(_timestamp + _count);
-        
-        // Concatenate "COMP-" with the bytes
-        bytes memory result = new bytes(PREFIX.length + countBytes.length);
-        
-        uint i;
-        for (i = 0; i < PREFIX.length; i++) {
-            result[i] = PREFIX[i];
-        }
-        
-        for (uint j = 0; j < countBytes.length; j++) {
-            result[i + j] = countBytes[j];
-        }
-        
-        return string(result);
+// Generates complaint ID as "COMP-BLOCKNUMBER"
+function generateComplaintId() internal view returns (string memory) {
+    bytes memory blockNumberBytes = uintToBytes(block.number);
+    
+    bytes memory result = new bytes(PREFIX.length + blockNumberBytes.length);
+    
+    uint i;
+    for (i = 0; i < PREFIX.length; i++) {
+        result[i] = PREFIX[i];
+    }
+    
+    for (uint j = 0; j < blockNumberBytes.length; j++) {
+        result[i + j] = blockNumberBytes[j];
+    }
+    
+    return string(result);
+}
+
+// Converts uint to bytes
+function uintToBytes(uint _value) internal pure returns (bytes memory) {
+    if (_value == 0) return bytes("0");
+
+    uint temp = _value;
+    uint digits;
+    while (temp != 0) {
+        digits++;
+        temp /= 10;
     }
 
-    function uintToBytes(uint _value) internal pure returns (bytes memory) {
-        if (_value == 0) return bytes("0");
-        
-        uint temp = _value;
-        uint digits;
-        while (temp != 0) {
-            digits++;
-            temp /= 10;
-        }
-        
-        bytes memory buffer = new bytes(digits);
-        while (_value != 0) {
-            digits -= 1;
-            buffer[digits] = bytes1(uint8(48 + _value % 10));
-            _value /= 10;
-        }
-        
-        return buffer;
+    bytes memory buffer = new bytes(digits);
+    while (_value != 0) {
+        digits -= 1;
+        buffer[digits] = bytes1(uint8(48 + _value % 10));
+        _value /= 10;
     }
 
-    function fileComplaint(
-        string calldata _complaintType,
-        string calldata _description,
-        string[] calldata _initialProofURIs,
-        string calldata _victimSignatureURI,
-        string calldata _severity,
-        string calldata _location,
-        uint64 _contactNumber
-    ) external {
-        uint32 currentCount = ++complaintCount;
-        uint40 currentTime = uint40(block.timestamp);
-        
-        string memory complaintId = generateComplaintId(currentCount, currentTime);
-        complaintIds[complaintId] = complaintCount;
+    return buffer;
+}
 
-        complaints[currentCount] = Complaint({
-            complaintId: complaintId,
-            complainant: msg.sender,
-            complaintType: _complaintType,
-            description: _description,
-            proofURIs: _initialProofURIs,
-            victimSignatureURI: _victimSignatureURI,
-            location: _location,
-            contactNumber: _contactNumber,
-            severity: _severity,
-            policeStation: address(0),
-            policeSignatureURI: "",
-            status: Status.Pending,
-            rejectionReason: "",
-            recordedTimestamp: currentTime,
-            lastUpdatedTimestamp: currentTime,
-            processedTimestamp: 0
-        });
+// Files a complaint and returns the full struct
+function fileComplaint(
+    string calldata _complaintType,
+    string calldata _description,
+    string[] calldata _initialProofURIs,
+    string calldata _victimSignatureURI,
+    string calldata _severity,
+    string calldata _location,
+    uint64 _contactNumber
+) external{
+    uint32 currentCount = ++complaintCount;
+    uint40 currentTime = uint40(block.timestamp);
 
-        emit ComplaintFiled(complaintId, msg.sender,_complaintType,_description, _severity, currentTime);
-    }
+    string memory complaintId = generateComplaintId();
+    complaintIds[complaintId] = currentCount;
+
+    Complaint memory newComplaint = Complaint({
+        complaintId: complaintId,
+        complainant: msg.sender,
+        complaintType: _complaintType,
+        description: _description,
+        proofURIs: _initialProofURIs,
+        victimSignatureURI: _victimSignatureURI,
+        location: _location,
+        contactNumber: _contactNumber,
+        severity: _severity,
+        policeStation: address(0),
+        policeSignatureURI: "",
+        status: Status.Pending,
+        rejectionReason: "",
+        recordedTimestamp: currentTime,
+        lastUpdatedTimestamp: currentTime,
+        processedTimestamp: 0
+    });
+
+    complaints[currentCount] = newComplaint;
+
+    emit ComplaintFiled(
+        complaintId,
+        msg.sender,
+        _complaintType,
+        _description,
+        _severity,
+        currentTime
+    );
+}
+
 
     function addEvidences(string calldata _complaintId, string[] calldata _newProofURIs) external {
         // if (_complaintId > complaintCount || _complaintId == 0) revert InvalidComplaintID();
@@ -196,7 +200,7 @@ contract FIRSystem {
         Complaint storage complaint = complaints[complaintIndex];
         
         
-        require(complaint.status == Status.Pending, "Complaint already processed");
+        require(complaint.status == Status.Pending || complaint.status == Status.Escalated, "Complaint already processed");
 
         uint40 currentTime = uint40(block.timestamp);
 
@@ -221,7 +225,7 @@ contract FIRSystem {
         Complaint storage complaint = complaints[complaintIndex];
         
         // if (complaint.status != Status.Pending) revert ComplaintAlreadyProcessed();
-                require(complaint.status == Status.Pending, "Complaint already processed");
+                require(complaint.status == Status.Pending ||complaint.status == Status.Escalated , "Complaint already processed");
 
 
         uint40 currentTime = uint40(block.timestamp);
@@ -296,6 +300,23 @@ contract FIRSystem {
         }
         return stationComplaints;
     }
+
+    function escalateComplaint(string calldata _complaintId) external {
+    uint32 complaintIndex = complaintIds[_complaintId];
+    require(complaintIndex != 0 && complaintIndex <= complaintCount, "Invalid complaint ID");
+
+    Complaint storage complaint = complaints[complaintIndex];
+
+    require(
+        complaint.status == Status.Pending,
+        "Complaint cannot be escalated"
+    );
+
+    complaint.status = Status.Escalated;
+    complaint.lastUpdatedTimestamp = uint40(block.timestamp);
+
+    emit ComplaintEscalated(_complaintId, msg.sender, uint40(block.timestamp));
+}
 
     
     function isPoliceStation(address _station) external view returns (bool) {
