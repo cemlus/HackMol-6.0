@@ -34,7 +34,7 @@ const OTPVerificationForm: React.FC<OTPVerificationFormProps> = ({ aadhaarNumber
       }
 
       onSuccess()
-      navigate("/dashboard");
+      navigate("/signin");
     } catch (error: any) {
       setError(error.message)
     } finally {

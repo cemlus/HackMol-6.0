@@ -1,5 +1,7 @@
+import { Shield } from "lucide-react"
 import { useState } from "react"
-
+import { Button } from "../ui/button"
+import { useNavigate } from "react-router-dom"
 interface AadhaarInputProps {
   onSubmit: (aadhaar: string) => void
 }
@@ -21,8 +23,49 @@ const AadhaarInput: React.FC<AadhaarInputProps> = ({ onSubmit }) => {
     await onSubmit(aadhaar)
     setLoading(false)
   }
+  const navigate = useNavigate()
 
   return (
+    <div className="bg-gray-50 flex flex-col">
+{/* 
+    <header className="sticky top-0 z-50 w-full border-b bg-white">
+        <div className="container flex h-16 items-center justify-between px-4">
+          <div className="flex items-center gap-2">
+            <Shield className="h-6 w-6 text-[#2A3B7D]" />
+            <span className="text-xl font-bold text-[#2A3B7D]">
+              CivicShield
+            </span>
+          </div>
+          <nav className="hidden md:flex gap-6">
+            <a href="/" className="text-sm font-medium hover:text-[#2A3B7D]">
+              Home
+            </a>
+            <a
+              href="#features"
+              className="text-sm font-medium hover:text-[#2A3B7D]"
+            >
+              Features
+            </a>
+            <a
+              href="#about"
+              className="text-sm font-medium hover:text-[#2A3B7D]"
+            >
+              About
+            </a>
+          </nav>
+          <div className="flex gap-4">
+            <Button
+              variant="outline"
+              className="border-[#2A3B7D] text-[#2A3B7D]"
+              onClick={() => {
+                navigate("/signin");
+              }}
+            >
+              Log In
+            </Button>
+          </div>
+        </div>
+      </header> */}
     <div className="flex flex-col gap-4">
       <h2 className="text-xl font-semibold">Enter Aadhaar Number</h2>
       <input
@@ -40,6 +83,7 @@ const AadhaarInput: React.FC<AadhaarInputProps> = ({ onSubmit }) => {
       >
         {loading ? "Sending OTP..." : "Send OTP"}
       </button>
+    </div>
     </div>
   )
 }
