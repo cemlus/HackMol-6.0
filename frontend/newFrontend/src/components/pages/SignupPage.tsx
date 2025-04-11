@@ -572,7 +572,7 @@ const SignupPage = () => {
 
       console.log("Form Data:", formData)
 
-      const response = await fetch("http://localhost:8000/signup", {
+      const response = await fetch("https://backend.topishukla.xyz/signup", {
         method: "POST",
         body: formData,
       })

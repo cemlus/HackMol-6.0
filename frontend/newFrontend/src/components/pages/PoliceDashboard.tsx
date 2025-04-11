@@ -65,7 +65,7 @@ const PoliceDashboard: React.FC = () => {
 
       if (action === "accept") {
         response = await axios.post(
-          "http://localhost:8000/acceptComplaint",
+          "https://backend.topishukla.xyz/acceptComplaint",
           {
             complaintId: selectedComplaint?.id,
           },
@@ -73,7 +73,7 @@ const PoliceDashboard: React.FC = () => {
         );
       } else if (action === "reject") {
         response = await axios.post(
-          "http://localhost:8000/rejectComplaint",
+          "https://backend.topishukla.xyz/rejectComplaint",
           {
             complaintId: selectedComplaint?.id,
             rejectionReason: selectedComplaint?.rejectionReason,
@@ -98,7 +98,7 @@ const PoliceDashboard: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/rejectComplaint",
+        "https://backend.topishukla.xyz/rejectComplaint",
         {
           complaintId: selectedComplaint.id,
           // action: "reject",
@@ -304,7 +304,7 @@ const PoliceDashboard: React.FC = () => {
   useEffect(() => {
     const checkAuthentication = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/checkAuth", {
+        const response = await axios.get("https://backend.topishukla.xyz/checkAuth", {
           withCredentials: true,
         });
         console.log(response.data);
@@ -314,7 +314,7 @@ const PoliceDashboard: React.FC = () => {
           response.data.role === "police"
         ) {
           const complaintsRes = await axios.get(
-            "http://localhost:8000/getComplaintsBypolicestation",
+            "https://backend.topishukla.xyz/getComplaintsBypolicestation",
             {
               withCredentials: true,
             }

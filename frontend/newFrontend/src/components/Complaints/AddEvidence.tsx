@@ -29,7 +29,7 @@ export function AddEvidence() {
 
     try {
       console.log("Submitting evidence:", formData); // Debugging line
-      const response = await axios.post("http://localhost:8000/addEvidence", formData, {
+      const response = await axios.post("https://backend.topishukla.xyz/addEvidence", formData, {
         withCredentials: true,
         headers: { "Content-Type": "multipart/form-data" },
       });

@@ -69,7 +69,7 @@ const PoliceSignupPage = () => {
         formData.append(key, value)
       })
 
-      const response = await axios.post("http://localhost:8000/policesignup", formData, {
+      const response = await axios.post("https://backend.topishukla.xyz/policesignup", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         }

@@ -24,7 +24,7 @@ export function VoiceComplaint() {
   useEffect(() => {
     const checkAuthentication = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/checkAuth", {
+        const response = await axios.get("https://backend.topishukla.xyz/checkAuth", {
           withCredentials: true,
         });
         if (!(response.status === 200 && response.data.authenticated && response.data.role === "user")) {
@@ -81,7 +81,7 @@ export function VoiceComplaint() {
 
       try {
         const response = await axios.post(
-          "http://localhost:8000/callComplaint",
+          "https://backend.topishukla.xyz/callComplaint",
           { description: transcript },
           { withCredentials: true }
         );

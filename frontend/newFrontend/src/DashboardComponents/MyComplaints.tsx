@@ -167,7 +167,7 @@ const MyComplaints: React.FC = () => {
   useEffect(() => {
     const checkAuthentication = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/checkAuth", {
+        const response = await axios.get("https://backend.topishukla.xyz/checkAuth", {
           withCredentials: true,
         });
         console.log(response.data)
@@ -176,7 +176,7 @@ const MyComplaints: React.FC = () => {
           response.data.authenticated &&
           response.data.role === "user"
         ) {
-          const complaintsRes = await axios.get("http://localhost:8000/userComplaints", {
+          const complaintsRes = await axios.get("https://backend.topishukla.xyz/userComplaints", {
             withCredentials: true,
           });
           console.log(complaintsRes.data.complaints.length)

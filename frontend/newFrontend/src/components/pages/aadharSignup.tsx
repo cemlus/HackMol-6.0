@@ -8,7 +8,7 @@ const SignupWithAadhaar = () => {
 
   const handleAadhaarSubmit = async (aadhaar: string) => {
     try {
-      const response = await fetch("http://localhost:8000/aadhaar/verify", {
+      const response = await fetch("https://backend.topishukla.xyz/aadhaar/verify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ aadhaar_number:aadhaar }),

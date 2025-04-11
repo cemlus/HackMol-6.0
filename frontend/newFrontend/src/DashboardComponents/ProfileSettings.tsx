@@ -39,7 +39,7 @@ const ProfileSettings: React.FC = () => {
   const handleSaveChanges = async () => {
     try {
       const response = await axios.put(
-        "http://localhost:8000/UserProfile", // Replace with your actual backend endpoint
+        "https://backend.topishukla.xyz/UserProfile", // Replace with your actual backend endpoint
         {
           name: personalDetails.name,
           email: personalDetails.email,

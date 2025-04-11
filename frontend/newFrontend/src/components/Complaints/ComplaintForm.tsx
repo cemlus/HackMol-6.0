@@ -126,11 +126,11 @@ const ComplaintForm = () => {
         description: description,
         complaintType: complaintType,
       }
-      const response = await axios.post("http://localhost:8000/questionRecommendation", formData,{
+      const response = await axios.post("https://backend.topishukla.xyz/questionRecommendation", formData,{
         withCredentials: true,
       })
 
-      const response2 = await axios.post("http://localhost:8000/ipccharges", formData,{
+      const response2 = await axios.post("https://backend.topishukla.xyz/pccharges", formData,{
         withCredentials: true,
       })
 
@@ -285,7 +285,7 @@ const ComplaintForm = () => {
   
     try {
       console.log(formDataToSend)
-      const response = await axios.post("http://localhost:8000/complaintForm", formDataToSend, {
+      const response = await axios.post("https://backend.topishukla.xyz/complaintForm", formDataToSend, {
         withCredentials: true,
         headers: {
           "Content-Type": "multipart/form-data",

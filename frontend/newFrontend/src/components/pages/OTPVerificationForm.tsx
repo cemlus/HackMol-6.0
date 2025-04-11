@@ -19,7 +19,7 @@ const OTPVerificationForm: React.FC<OTPVerificationFormProps> = ({ aadhaarNumber
     setError("")
     setLoading(true)
     try {
-      const response = await fetch("http://localhost:8000/aadhaar/verifyOtp", {
+      const response = await fetch("https://backend.topishukla.xyz/aadhaar/verifyOtp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ aadhaar_number: aadhaarNumber, otp }),
