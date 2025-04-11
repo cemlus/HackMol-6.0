@@ -39,6 +39,7 @@ const SigninPage: React.FC = () => {
           message: response.data.err,
         });
       } else if (response.data.redirect) {
+        console.log("Redirecting to:", response.data.redirect);
         navigate(`/${response.data.redirect}`);
       }
       // Handle successful login

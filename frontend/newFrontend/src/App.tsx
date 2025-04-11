@@ -30,10 +30,10 @@ function App() {
           </Route>
           <Route path='/policeDashboard' element={<PoliceDashboard/>} />
           {/* Redirect root to dashboard */}
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          {/* <Route path="/" element={<Navigate to="/dashboard" replace />} /> */}
 
           {/* Catch all other routes and redirect to dashboard */}
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          {/* <Route path="*" element={<Navigate to="/dashboard" replace />} /> */}
 
           <Route path='/dashboard/police' element={<Dashboard />} />
           <Route path='/fileComplaint' element={<FileComplaintPage/>} />
