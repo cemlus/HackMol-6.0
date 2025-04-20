@@ -25,6 +25,14 @@ const userSchema = new mongoose.Schema({
             return this.role === "police";
         }
     },
+    requestInfo: {
+    type: {
+        count: { type: Number, default: 0 },
+        lastReset: { type: Date, default: Date.now },
+        bannedUntil: { type: Date, default: null }
+    },
+    default: () => ({ count: 0, lastReset: new Date(), bannedUntil: null })
+    }
     // firs: [{ type: mongoose.Schema.Types.ObjectId, ref: "FIR" }]
 });
 

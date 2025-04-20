@@ -5,21 +5,32 @@ import dotenv from "dotenv";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 import helmet from "helmet";
+import authRoute from "./src/routes/authRoutes.js";
+import complaintRoutes from "./src/routes/complaintRoutes.js";
 console.log("app.js loaded")
 
+// import crypticRoute from "./src/routes/crypticRoute.js";
+// import leaderBoardRoute from "./src/routes/leaderBoardRoute.js";
 import connectDB from "./src/db/mongoose.js";
 // import { authenticateToken } from './src/middleware/authMiddleware.js';
-
-// import rateLimiter from './src/middleware/rateLimiterMiddleware.js';
+import rateLimiter from './src/middleware/rateLimiterMiddleware.js';
 import cors from 'cors';
 import client from "prom-client";
-
-
-//Routes
+import gameRoutes from "./src/routes/gameRoutes.js"
 import testRoutes from "./src/routes/testRoutes.js";
-
 const collectDefaultMetrics = client.collectDefaultMetrics;
 collectDefaultMetrics({ register:client.register });
+import { createLogger, transports } from "winston";
+import LokiTransport from "winston-loki";
+const options = {
+    transports: [
+      new LokiTransport({
+        host: "http://13.200.30.53:3100"
+      })
+    ]
+  };
+  const logger = createLogger(options);
+  export { logger };
 
 const app = express();
 app.set('trust proxy' , 20);
@@ -32,7 +43,21 @@ const START_PORT = 8000;
 app.use(cors(
     {
       // origin:["https://www.backslashtiet.com","https://backslashtiet.com"],
-    origin:["http://localhost:5173", "http://localhost:7001"],
+//    origin:["http://localhost:5173", "http://localhost:7001"],
+    // origin: "*",
+	    origin: function (origin, callback) {
+    // Allow requests from frontend, no-origin (like mobile apps), or specific trusted origins
+    if (
+      !origin || // allow mobile apps or curl/postman
+      origin === "https://frontend.topishukla.xyz" ||
+      origin === "capacitor://localhost" || // for Ionic/Capacitor apps
+      origin === "file://" // for Electron apps
+    ) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
     methods:["POST","GET"],
     credentials: true // Allow cookies to be sent with the request
   }
@@ -69,8 +94,16 @@ app.get("/metrics",async(req,res)=>{
 })
 
 
-app.use("/test",testRoutes);
 
+
+
+
+app.use(authRoute);
+app.use(gameRoutes);
+app.use(complaintRoutes)
+// app.use(crypticRoute);
+// app.use(leaderBoardRoute);
+app.use("/test",testRoutes);
 
 function startServers() {
     for (let i = 0; i < NUM_INSTANCES; i++) {

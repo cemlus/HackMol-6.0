@@ -1,24 +1,25 @@
 import fs from 'fs';
 import path from 'path';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 import {ethers} from 'ethers';
 import {upload, uploadToPinata} from '../utils/pinata.js'
 
-const provider = new ethers.JsonRpcProvider(process.env.PROVIDER_URL);
+// const provider = new ethers.JsonRpcApiProvider("https://eth-sepolia.g.alchemy.com/v2/bMJ0G0Bh3Lc746InmC6RuQPf3HNLIkQ5",{
+//     name: "sepolia",
+//     chainId: 11155111,
+// })
+const provider = new ethers.JsonRpcProvider("https://eth-sepolia.g.alchemy.com/v2/bMJ0G0Bh3Lc746InmC6RuQPf3HNLIkQ5");
 
 // Get block by number
 const blockNumber = "latest";
 const block = await provider.getBlock(blockNumber);
 
 // console.log(block);
-const wallet = new ethers.Wallet(process.env.WALLET, provider)
-import contractABI from '../../data/FIRSystem.json' assert {type: 'json'};
-
-const contractAddress = process.env.CONTRACT_ADDRESS;
-
+const wallet = new ethers.Wallet("1792b2aa6bd088ff6c7acefb11d9e9fa0677587c3b7b89087f6e4f52fd2abc92", provider)
+const contractABI = JSON.parse(fs.readFileSync('./Server/data/FIRSystem.json', 'utf8'));
+ //const contractAddress = "0x8B0617C8690d18c1736FF4386387C0f6c24D6B8c"; // Replace with your contract address
+const contractAddress = "0xc5d0c206fb6dE700A65221F6CA39d7F94634510a";
+// import contractABI from '../../data/FIRSystem.json' assert {type: 'json'};
 const contract = new ethers.Contract(contractAddress, contractABI.abi, wallet);
 
 const createMulterLikeFile = (filePath) => {

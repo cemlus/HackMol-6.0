@@ -8,12 +8,12 @@ dotenv.config();
 const storage = multer.memoryStorage();
 export const upload = multer({ storage: storage });
 
-const pinataApiKey = process.env.PINATA_API_IKEY;
-const pinataSecretApiKey = process.env.PINATA_SECRET_API_KEY;
+const pinataApiKey = "4b4cd7c93847e049f7d5";
+const pinataSecretApiKey = "819ebbaf21b04fdaba1428c472d38b3b450a9489950a5b08fa2b5113a0448bc4";
 
-const pinataBaseUrl = process.env.PINATA_BASE_URL;
+const pinataBaseUrl = "https://api.pinata.cloud/pinning/pinFileToIPFS";
 
-const gatewayUrl = process.env.GaTEWAY_URL;
+const gatewayUrl = "https://brown-above-buzzard-878.mypinata.cloud/ipfs"
 
 export async function uploadToPinata(file, contactNumber){
     const formData = new FormData();

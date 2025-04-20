@@ -5,7 +5,9 @@ dotenv.config();
 
 const connectDB = async () => {
   try {
-    mongoose.connect(process.env.MONGODB_URI);
+    const mongoURI =process.env.MONGODB_URI;
+
+    mongoose.connect(mongoURI);
 
     const connection = mongoose.connection;
     connection.on(
@@ -17,6 +19,7 @@ const connectDB = async () => {
     });
   } catch (error) {
     console.error("MONGODB Connection error", error);
+    process.exit(1);
   }
 };
 
