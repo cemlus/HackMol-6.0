@@ -59,7 +59,7 @@ const FileComplaintPage: React.FC = () => {
             className="flex items-center gap-2"
           >
             <Shield className="h-6 w-6 text-[#2A3B7D]" />
-            <span className="text-xl font-bold text-[#2A3B7D]">CivicShield</span>
+            <span className="text-xl font-bold text-[#2A3B7D]">CivicSentinel</span>
           </motion.div>
           <nav className="hidden md:flex gap-6">
             {/* Navigation items */}
