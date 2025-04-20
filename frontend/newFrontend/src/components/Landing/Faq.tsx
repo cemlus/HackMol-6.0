@@ -67,7 +67,7 @@ export function FAQ() {
             Frequently Asked Questions
           </h2>
           <p className="max-w-[900px] text-gray-600 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-            Get answers to common questions about CivicShield
+            Get answers to common questions about CivicSentinel
           </p>
         </motion.div>
 

@@ -7,10 +7,10 @@ export function FooterSmall() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2">
             <Shield className="h-5 w-5" />
-            <span className="text-sm font-bold">CivicShield</span>
+            <span className="text-sm font-bold">CivicSentinel</span>
           </div>
           <div className="text-sm text-white/70">
-            © 2025 CivicShield. All rights reserved.
+            © 2025 CivicSentinel. All rights reserved.
           </div>
         </div>
       </div>

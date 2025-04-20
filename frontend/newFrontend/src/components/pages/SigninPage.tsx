@@ -61,7 +61,7 @@ const SigninPage: React.FC = () => {
           <div className="flex items-center gap-2">
             <Shield className="h-6 w-6 text-[#2A3B7D]" />
             <span className="text-xl font-bold text-[#2A3B7D]">
-              CivicShield
+              CivicSentinel
             </span>
           </div>
           <nav className="hidden md:flex gap-6">
@@ -116,7 +116,7 @@ const SigninPage: React.FC = () => {
                 Welcome Back
               </h1>
               <p className="text-gray-500 mt-2">
-                Log in to your CivicShield account
+                Log in to your CivicSentinel account
               </p>
             </div>
 
@@ -242,10 +242,10 @@ const SigninPage: React.FC = () => {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-2">
               <Shield className="h-5 w-5" />
-              <span className="text-sm font-bold">CivicShield</span>
+              <span className="text-sm font-bold">CivicSentinel</span>
             </div>
             <div className="text-sm text-white/70">
-              © 2025 CivicShield. All rights reserved.
+              © 2025 CivicSentinel. All rights reserved.
             </div>
           </div>
         </div>

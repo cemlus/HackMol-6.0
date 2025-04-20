@@ -619,7 +619,7 @@ const SignupPage = () => {
           <div className="flex items-center gap-2">
             <Shield className="h-6 w-6 text-[#2A3B7D]" />
             <span className="text-xl font-bold text-[#2A3B7D]">
-              CivicShield
+              CivicSentinel
             </span>
           </div>
           <nav className="hidden md:flex gap-6">
@@ -663,7 +663,7 @@ const SignupPage = () => {
                   Create Your Account
                 </h1>
                 <p className="text-gray-500 mt-2">
-                  Join CivicShield to report and track emergencies
+                  Join CivicSentinel to report and track emergencies
                 </p>
               </div>
 

@@ -47,7 +47,7 @@ const DashboardLayout: React.FC = () => {
             <div className="flex items-center gap-2 cursor-pointer" 
             onClick={() => navigate('/')} >
               <Shield className="h-6 w-6 text-[#2A3B7D]" />
-              <span className="text-xl font-bold text-[#2A3B7D]">CivicShield</span>
+              <span className="text-xl font-bold text-[#2A3B7D]">CivicSentinel</span>
             </div>
             {isMobile && (
               <Button variant="ghost" size="sm" className="ml-auto" onClick={toggleSidebar}>

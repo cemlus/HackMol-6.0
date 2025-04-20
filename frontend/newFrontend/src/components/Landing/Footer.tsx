@@ -8,7 +8,7 @@ export function Footer () {
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <Shield className="h-6 w-6" />
-                <span className="text-xl font-bold">CivicShield</span>
+                <span className="text-xl font-bold">CivicSentinel</span>
               </div>
               <p className="text-sm text-white/70">
                 Empowering Emergencies with AI & Blockchain – Transparent, Fast, Trusted.
@@ -42,7 +42,7 @@ export function Footer () {
             <div>
               <h3 className="text-lg font-medium mb-4">Contact</h3>
               <ul className="space-y-2 text-sm text-white/70">
-                <li>info@civicshield.com</li>
+                <li>info@CivicSentinel.com</li>
                 <li>+1 (555) 000-0000</li>
                 <li>123 Blockchain Avenue, Digital City</li>
               </ul>
@@ -54,7 +54,7 @@ export function Footer () {
               <span className="text-sm text-white/70">|</span>
               <span className="text-sm text-white/70">ISO 27001 Certified</span>
             </div>
-            <div className="text-sm text-white/70">© 2025 CivicShield. All rights reserved.</div>
+            <div className="text-sm text-white/70">© 2025 CivicSentinel. All rights reserved.</div>
           </div>
         </div>
       </footer>
